@@ -1,0 +1,73 @@
+{
+    "parser": "babel-eslint",
+
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "extends": "eslint:recommended",
+    "installedESLint": true,
+    "parserOptions": {
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "flowtype"
+    ],
+    "rules": {
+        "indent": [
+            "warn",
+            4
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "warn",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-unused-vars": [
+            "warn", {
+                "vargs": "all",
+                "args": "after-used"
+            }
+        ],
+        "flowtype/define-flow-type": 1,
+        "flowtype/require-parameter-type": [
+            1, {
+                "excludeArrowFunctions": true
+            }
+        ],
+        "flowtype/require-return-type": [
+            1,
+            "always", {
+                "excludeArrowFunctions": true,
+                "annotateUndefined": "never"
+            }
+        ],
+        "flowtype/space-after-type-colon": [
+            1,
+            "always"
+        ],
+        "flowtype/space-before-type-colon": [
+            1,
+            "never"
+        ],
+        "flowtype/use-flow-type": 1,
+        "flowtype/valid-syntax": 1
+    },
+    "settings": {
+        "flowype": {
+            "onlyFilesWithFlowAnnotation": false
+        }
+    }
+}
