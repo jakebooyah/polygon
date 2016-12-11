@@ -24,22 +24,7 @@ cc.Class({
         hintsAnimation: cc.Animation,
     },
 
-    shuffleArray(array) {
-        for (var i = array.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-        }
-        return array;
-    },
-
-    show(levelData, toShuffle, nextColour) {
-        if (toShuffle) {
-            if (levelData.length) {
-                levelData = this.shuffleArray(levelData.slice(0));
-            }
-        }
+    show(levelData, nextColour) {
         // configuring hintsAnimation
         for (let n = 0; n < levelData.length; n++) {
             // top
