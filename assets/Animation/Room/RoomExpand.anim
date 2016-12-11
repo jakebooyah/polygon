@@ -32,34 +32,7 @@
         }
       ]
     },
-    "paths": {
-      "Room": {
-        "props": {
-          "width": [
-            {
-              "frame": 0,
-              "value": 100,
-              "curve": "quadIn"
-            },
-            {
-              "frame": 0.5,
-              "value": 400
-            }
-          ],
-          "height": [
-            {
-              "frame": 0.5,
-              "value": 100,
-              "curve": "quadIn"
-            },
-            {
-              "frame": 1,
-              "value": 400
-            }
-          ]
-        }
-      }
-    }
+    "paths": {}
   },
   "events": []
 }

@@ -13,46 +13,86 @@ cc.Class({
 
     properties: {
         player: Player,
-        playerNode: cc.Node,
+
+        levelColours: [cc.Color],
+
+        progressBar: cc.PageView,
+
+        progressBarContentNode: cc.Node,
         roomNode: cc.Node,
+
+        progressBarAnimation: cc.Animation,
         playerAnimation: cc.Animation,
         roomAnimation: cc.Animation,
+        pathAnimation: cc.Animation,
     },
 
     // use this for initialization
     onLoad() {
         this.player.setOnExitRoomCallback(this.onPlayerExitRoom.bind(this));
 
+        this.currentLevel = 0;
+        this.setLevelColour(this.levelColours[0]);
+
+        this.setUpProgressBarColour();
+
+        this.roomAnimation.on('finished', this.onRoomFinishExpand, this);
+        this.roomAnimation.play('RoomExpand');
+    },
+
+    onRoomFinishExpand() {
+        this.roomAnimation.off('finished', this.onRoomFinishExpand, this);
+
         this.playerAnimation.on('finished', this.onPlayerFinishSpawning, this);
         this.playerAnimation.play('PlayerFadeIn');
-        this.roomAnimation.play('RoomExpand');
+        this.pathAnimation.play('PathFadeIn');
     },
 
     onPlayerFinishSpawning() {
         this.playerAnimation.off('finished', this.onPlayerFinishSpawning, this);
-        this.player.canMove = true;
+        this.progressBarAnimation.play('ProgressBarFadeIn');
     },
 
-    onPlayerExitRoom(room) {
-        cc.log('room: ' + room);
-        this.player.canMove = false;
-
+    onPlayerExitRoom(direction) {
         this.playerAnimation.on('finished', this.onPlayerEnterRoom, this);
 
-        if (room === DIRECTION.RIGHT) {
-            this.roomNode.color = new cc.Color(182, 178, 215);
-            this.playerNode.color = new cc.Color(182, 178, 215);
+        if (direction === DIRECTION.RIGHT) {
+            this.currentLevel = this.currentLevel + 1;
+            if (this.currentLevel >= this.levelColours.length - 1) this.currentLevel = this.levelColours.length - 1;
+
+            this.setLevelColour(this.levelColours[this.currentLevel]);
+            this.progressBar.scrollToPage(this.currentLevel);
+
             this.playerAnimation.play('PlayerEnterFromLeft');
-        } else if (room === DIRECTION.LEFT) {
-            this.roomNode.color = new cc.Color(232, 239, 232);
-            this.playerNode.color = new cc.Color(232, 239, 232);
+        } else if (direction === DIRECTION.LEFT) {
+            this.currentLevel = this.currentLevel - 1;
+            if (this.currentLevel < 0) this.currentLevel = 0;
+
+            this.setLevelColour(this.levelColours[this.currentLevel]);
+            this.progressBar.scrollToPage(this.currentLevel);
+
             this.playerAnimation.play('PlayerEnterFromRight');
         }
     },
 
     onPlayerEnterRoom() {
         this.playerAnimation.off('finished', this.onPlayerEnterRoom, this);
-        this.player.reset();
+    },
+
+    setLevelColour(colour) {
+        this.roomNode.color = colour;
+    },
+
+    setUpProgressBarColour() {
+        let levels = this.progressBarContentNode.children;
+        let levelColours = this.levelColours;
+        let length = levels.length;
+
+        if (length == levelColours.length) {
+            for (let n = 0; n < length; n++) {
+                levels[n].getChildByName('Box').color = levelColours[n];
+            }
+        }
     },
 
 });
