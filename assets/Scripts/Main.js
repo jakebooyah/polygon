@@ -110,10 +110,10 @@ const LEVELS = [
     ],
     [
         // 12
-        {shape: SHAPE.DIAMOND, action: ACTION.NEXT},
-        {shape: SHAPE.DIAMOND, action: ACTION.BACK},
-        {shape: SHAPE.BOX, action: ACTION.BACKRANDOM},
-        {shape: SHAPE.BOX, action: ACTION.KILL},
+        {shape: SHAPE.NONE, action: ACTION.NEXT},
+        {shape: SHAPE.NONE, action: ACTION.BACK},
+        {shape: SHAPE.NONE, action: ACTION.BACKRANDOM},
+        {shape: SHAPE.NONE, action: ACTION.KILL},
     ],
     [
         // 13
@@ -198,15 +198,14 @@ cc.Class({
         this.playerAnimation.play('PlayerFadeIn');
         this.pathAnimation.play('PathFadeIn');
 
-        let currentLevel = this.currentLevel;
-
-        this.hints.show(this.levelData[currentLevel], false, this.levelColours[currentLevel + 1]);
     },
 
     onPlayerFinishSpawning() {
         this.playerAnimation.off('finished', this.onPlayerFinishSpawning, this);
         this.progressBarAnimation.play('ProgressBarFadeIn');
         this.controlsAnimation.play('ControlsFadeIn');
+        let currentLevel = this.currentLevel;
+        this.hints.show(LEVELS[currentLevel], false, this.levelColours[currentLevel + 1]);
         this.player.canMove = true;
     },
 
@@ -235,7 +234,7 @@ cc.Class({
     onPlayerEnterRoom() {
         let currentLevel = this.currentLevel;
 
-        this.hints.show(this.levelData[currentLevel], false, this.levelColours[currentLevel + 1]);
+        this.hints.show(LEVELS[currentLevel], true, this.levelColours[currentLevel + 1]);
         this.playerAnimation.off('finished', this.onPlayerEnterRoom, this);
         this.player.canMove = true;
     },

@@ -1,4 +1,5 @@
 /* global cc */
+import Hints from './Hints';
 
 const DIRECTION = cc.Enum({
     UP: 0,
@@ -12,6 +13,7 @@ cc.Class({
 
     properties: {
         playerAnimation: cc.Animation,
+        hints: Hints,
     },
 
     // use this for initialization
@@ -26,6 +28,7 @@ cc.Class({
     moveLeft() {
         if (!this.canMove) return;
         this.canMove = false;
+        this.hints.hide();
         this.playerAnimation.on('finished', this.onPlayerExitRoom, this);
         this.playerAnimation.play('PlayerExitLeft');
     },
@@ -33,6 +36,7 @@ cc.Class({
     moveRight() {
         if (!this.canMove) return;
         this.canMove = false;
+        this.hints.hide();
         this.playerAnimation.on('finished', this.onPlayerExitRoom, this);
         this.playerAnimation.play('PlayerExitRight');
     },

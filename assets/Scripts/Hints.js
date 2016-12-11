@@ -24,25 +24,31 @@ cc.Class({
         hintsAnimation: cc.Animation,
     },
 
-    show(levelData, toShuffle, nextColour) {
-        cc.log('test');
+    shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
+    },
 
+    show(levelData, toShuffle, nextColour) {
         if (toShuffle) {
             if (levelData.length) {
-                let shuffle = require('knuth-shuffle').knuthShuffle, levelData, shuffledlevelData;
-                levelData = shuffle(levelData.slice(0));
+                levelData = this.shuffleArray(levelData.slice(0));
             }
         }
-
-        cc.log(levelData);
-
         // configuring hintsAnimation
         for (let n = 0; n < levelData.length; n++) {
             // top
             if (n == 0) {
                 if (levelData[n].shape == SHAPE.DIAMOND) {
+                    this.top.active = true;
                     this.top.rotation = 45;
                 } else if (levelData[n].shape == SHAPE.BOX) {
+                    this.top.active = true;
                     this.top.rotation = 0;
                 } else if (levelData[n].shape == SHAPE.NONE) {
                     this.top.active = false;
@@ -50,13 +56,17 @@ cc.Class({
 
                 if (levelData[n].colour) {
                     this.top.color = nextColour;
+                } else {
+                    this.top.color = new cc.Color(255, 255, 255);
                 }
             }
             // right
-            if (n == 0) {
+            if (n == 1) {
                 if (levelData[n].shape == SHAPE.DIAMOND) {
+                    this.right.active = true;
                     this.right.rotation = 45;
                 } else if (levelData[n].shape == SHAPE.BOX) {
+                    this.right.active = true;
                     this.right.rotation = 0;
                 } else if (levelData[n].shape == SHAPE.NONE) {
                     this.right.active = false;
@@ -64,13 +74,17 @@ cc.Class({
 
                 if (levelData[n].colour) {
                     this.right.color = nextColour;
+                } else {
+                    this.right.color = new cc.Color(255, 255, 255);
                 }
             }
             // bottom
-            if (n == 0) {
+            if (n == 2) {
                 if (levelData[n].shape == SHAPE.DIAMOND) {
+                    this.bottom.active = true;
                     this.bottom.rotation = 45;
                 } else if (levelData[n].shape == SHAPE.BOX) {
+                    this.bottom.active = true;
                     this.bottom.rotation = 0;
                 } else if (levelData[n].shape == SHAPE.NONE) {
                     this.bottom.active = false;
@@ -78,13 +92,17 @@ cc.Class({
 
                 if (levelData[n].colour) {
                     this.bottom.color = nextColour;
+                } else {
+                    this.bottom.color = new cc.Color(255, 255, 255);
                 }
             }
             // left
-            if (n == 0) {
+            if (n == 3) {
                 if (levelData[n].shape == SHAPE.DIAMOND) {
+                    this.left.active = true;
                     this.left.rotation = 45;
                 } else if (levelData[n].shape == SHAPE.BOX) {
+                    this.left.active = true;
                     this.left.rotation = 0;
                 } else if (levelData[n].shape == SHAPE.NONE) {
                     this.left.active = false;
@@ -92,6 +110,8 @@ cc.Class({
 
                 if (levelData[n].colour) {
                     this.left.color = nextColour;
+                } else {
+                    this.left.color = new cc.Color(255, 255, 255);
                 }
             }
         }
