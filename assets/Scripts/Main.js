@@ -1,5 +1,6 @@
 /* global cc */
 import Player from './Player';
+import Rotatable from './Rotatable';
 
 const DIRECTION = cc.Enum({
     UP: 0,
@@ -13,6 +14,7 @@ cc.Class({
 
     properties: {
         player: Player,
+        rotatable: Rotatable,
 
         levelColours: [cc.Color],
 
@@ -30,6 +32,7 @@ cc.Class({
     // use this for initialization
     onLoad() {
         this.player.setOnExitRoomCallback(this.onPlayerExitRoom.bind(this));
+        this.rotatable.setOnRotateDoneCallback(this.onRotateDone.bind(this));
 
         this.currentLevel = 0;
         this.setLevelColour(this.levelColours[0]);
@@ -38,6 +41,35 @@ cc.Class({
 
         this.roomAnimation.on('finished', this.onRoomFinishExpand, this);
         this.roomAnimation.play('RoomExpand');
+    },
+
+    setLevelColour(colour) {
+        this.roomNode.color = colour;
+    },
+
+    setUpProgressBarColour() {
+        let levels = this.progressBarContentNode.children;
+        let levelColours = this.levelColours;
+        let length = levels.length;
+
+        if (length == levelColours.length) {
+            for (let n = 0; n < length; n++) {
+                levels[n].getChildByName('Box').color = levelColours[n];
+            }
+        }
+    },
+
+    movePlayerRight() {
+        this.player.moveRight();
+    },
+
+    movePlayerLeft() {
+        this.player.moveLeft();
+    },
+
+    rotate() {
+        this.player.canMove = false;
+        this.rotatable.rotate();
     },
 
     onRoomFinishExpand() {
@@ -77,22 +109,11 @@ cc.Class({
 
     onPlayerEnterRoom() {
         this.playerAnimation.off('finished', this.onPlayerEnterRoom, this);
+        this.player.canMove = true;
     },
 
-    setLevelColour(colour) {
-        this.roomNode.color = colour;
-    },
-
-    setUpProgressBarColour() {
-        let levels = this.progressBarContentNode.children;
-        let levelColours = this.levelColours;
-        let length = levels.length;
-
-        if (length == levelColours.length) {
-            for (let n = 0; n < length; n++) {
-                levels[n].getChildByName('Box').color = levelColours[n];
-            }
-        }
+    onRotateDone() {
+        this.player.canMove = true;
     },
 
 });

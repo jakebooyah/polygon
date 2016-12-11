@@ -16,35 +16,23 @@ cc.Class({
 
     // use this for initialization
     onLoad() {
-        this.setInputControl();
+        this.canMove = false;
     },
 
     setOnExitRoomCallback(callback) {
         this._onExitRoom = callback;
     },
 
-    setInputControl() {
-        let self = this;
-        // add keyboard event listener
-        cc.eventManager.addListener({
-            event: cc.EventListener.KEYBOARD,
-            onKeyReleased: function(keyCode) {
-                switch (keyCode) {
-                    case cc.KEY.a:
-                        break;
-                    case cc.KEY.d:
-                        break;
-                }
-            }
-        }, self.node);
-    },
-
-    leftButtonClick() {
+    moveLeft() {
+        if (!this.canMove) return;
+        this.canMove = false;
         this.playerAnimation.on('finished', this.onPlayerExitRoom, this);
         this.playerAnimation.play('PlayerExitLeft');
     },
 
-    rightButtonClick() {
+    moveRight() {
+        if (!this.canMove) return;
+        this.canMove = false;
         this.playerAnimation.on('finished', this.onPlayerExitRoom, this);
         this.playerAnimation.play('PlayerExitRight');
     },
@@ -58,10 +46,7 @@ cc.Class({
         if (player.x > 0) room = DIRECTION.RIGHT;
         if (player.x < 0) room = DIRECTION.LEFT;
 
-        if (!this.haveExitedRoom) {
-            this.haveExitedRoom = true;
-            this._onExitRoom(room);
-        }
+        this._onExitRoom(room);
     },
 
 });
