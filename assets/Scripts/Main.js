@@ -347,10 +347,6 @@ cc.Class({
         let currentLevel = this.currentLevel;
         this.currentLevelData = LEVELS[currentLevel];
 
-        cc.log('current level: ' + this.currentLevel);
-        cc.log('current level data');
-        cc.log(LEVELS[currentLevel]);
-
         this.hints.show(LEVELS[currentLevel], this.levelColours[currentLevel + 1]);
         this.player.canMove = true;
         this.rotatable.canRotate = true;
@@ -361,9 +357,6 @@ cc.Class({
 
         let rotation = this.rotatable.getCurrentRotation();
         let action;
-
-        cc.log(this.currentLevelData);
-        cc.log(rotation);
 
         if (direction === DIRECTION.RIGHT) {
             if (rotation == 0) {
@@ -399,10 +392,11 @@ cc.Class({
         } else if (action == ACTION.KILL) {
             this.currentLevel = 0;
         } else if (action == ACTION.BACKRANDOM) {
-            this.currentLevel = Math.random() * this.currentLevel;
+            this.currentLevel = Math.floor(Math.random() * this.currentLevel);
         }
 
-        this.setLevelColour(this.levelColours[this.currentLevel]);
+        let colour = this.levelColours[this.currentLevel];
+        this.setLevelColour(colour);
         this.progressBar.scrollToPage(this.currentLevel);
 
         if (this.currentLevel == this.levelColours.length - 1) {
@@ -426,9 +420,6 @@ cc.Class({
         let shuffledLevelData = this.shuffleArray(LEVELS[currentLevel]);
         this.currentLevelData = shuffledLevelData;
 
-        cc.log('current level: ' + this.currentLevel);
-        cc.log('current level data');
-        cc.log(shuffledLevelData);
         this.hints.show(shuffledLevelData, this.levelColours[currentLevel + 1]);
 
         this.playerAnimation.off('finished', this.onPlayerEnterRoom, this);

@@ -1,0 +1,17 @@
+{
+  "excludeScenes": [],
+  "includeAnySDK": false,
+  "includeSdk": [
+    "anysdk"
+  ],
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": false,
+    "upsideDown": false
+  },
+  "packageName": "org.cocos2d.room",
+  "startScene": "d9d0098b-619e-4783-8561-3e40d6292b2e",
+  "title": "Polygon_LudumDare37",
+  "webOrientation": "landscape"
+}
