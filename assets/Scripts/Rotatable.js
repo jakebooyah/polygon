@@ -20,7 +20,7 @@ cc.Class({
 
     // use this for initialization
     onLoad() {
-
+        this.currentRotation = 0;
     },
 
     setOnRotateDoneCallback(callback) {
@@ -36,7 +36,22 @@ cc.Class({
         this.pathAnimation.off('finished', this.onPathShrinkDone, this);
 
         this.rotatableAnimation.on('finished', this.onRotateDone, this);
-        this.rotatableAnimation.play();
+        let clips = this.rotatableAnimation.getClips();
+        let clip = clips[0];
+        let newClips = clips.slice(0);
+        let newClip = newClips[0];
+
+        this.rotatableAnimation.removeClip (clip, true);
+
+        newClip.curveData.props.rotation[0].value = this.currentRotation;
+        this.currentRotation += 90;
+        newClip.curveData.props.rotation[1].value = this.currentRotation;
+
+        if (this.currentRotation == 360) this.currentRotation = 0;
+
+        this.rotatableAnimation.addClip(newClip, 'Rotate');
+
+        this.rotatableAnimation.play('Rotate');
     },
 
     onRotateDone() {

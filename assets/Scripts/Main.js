@@ -27,6 +27,8 @@ cc.Class({
         playerAnimation: cc.Animation,
         roomAnimation: cc.Animation,
         pathAnimation: cc.Animation,
+        controlsAnimation: cc.Animation,
+
     },
 
     // use this for initialization
@@ -83,6 +85,8 @@ cc.Class({
     onPlayerFinishSpawning() {
         this.playerAnimation.off('finished', this.onPlayerFinishSpawning, this);
         this.progressBarAnimation.play('ProgressBarFadeIn');
+        this.controlsAnimation.play('ControlsFadeIn');
+        this.player.canMove = true;
     },
 
     onPlayerExitRoom(direction) {
