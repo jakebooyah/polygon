@@ -277,6 +277,10 @@ cc.Class({
         controlsAnimation: cc.Animation,
         rotatableAnimation: cc.Animation,
         theEndAnimation: cc.Animation,
+
+        rain: cc.AudioClip,
+        forest: cc.AudioClip,
+        bell: cc.AudioClip,
     },
 
     // use this for initialization
@@ -287,7 +291,11 @@ cc.Class({
         this.currentLevel = 0;
         this.setLevelColour(this.levelColours[0]);
 
+        this.gameHasEnded = false;
+
         this.setUpProgressBarColour();
+
+        this.rainAudioId = cc.audioEngine.play(this.rain, false, 0.3);
 
         this.roomAnimation.on('finished', this.onRoomFinishExpand, this);
         this.roomAnimation.play('RoomExpand');
@@ -386,6 +394,7 @@ cc.Class({
             if (futureLevel < 0) futureLevel = 0;
             this.currentLevel = futureLevel;
         } else if (action == ACTION.NEXT) {
+            cc.audioEngine.play(this.bell, false, 0.5);
             this.currentLevel = this.currentLevel + 1;
         } else if (action == ACTION.KILL) {
             this.currentLevel = 0;
@@ -443,6 +452,11 @@ cc.Class({
     },
 
     showEnding() {
+        this.gameHasEnded = true;
+
+        cc.audioEngine.setVolume(this.rainAudioId, 0.1);
+        cc.audioEngine.play(this.forest, false, 0.3);
+
         this.hints.hide();
         this.controlsAnimation.play('ControlsFadeOut');
         this.progressBarAnimation.play('ProgressBarFadeOut');

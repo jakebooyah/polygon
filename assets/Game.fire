@@ -4738,6 +4738,15 @@
     },
     "theEndAnimation": {
       "__id__": 115
+    },
+    "rain": {
+      "__uuid__": "16a47ce9-3460-4932-9f68-6054bfaff7da"
+    },
+    "forest": {
+      "__uuid__": "fcbcbac0-1373-42a8-8555-847d828984f7"
+    },
+    "bell": {
+      "__uuid__": "d0026ca3-7e11-43c4-87fa-ce772104fd21"
     }
   }
 ]
