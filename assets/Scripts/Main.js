@@ -295,7 +295,7 @@ cc.Class({
 
         this.setUpProgressBarColour();
 
-        this.rainAudioId = cc.audioEngine.play(this.rain, false, 0.3);
+        this.rainAudioId = cc.audioEngine.play(this.rain, true, 0.3);
 
         this.roomAnimation.on('finished', this.onRoomFinishExpand, this);
         this.roomAnimation.play('RoomExpand');
@@ -446,7 +446,7 @@ cc.Class({
         this.gameHasEnded = true;
 
         cc.audioEngine.setVolume(this.rainAudioId, 0.1);
-        cc.audioEngine.play(this.forest, false, 0.3);
+        cc.audioEngine.play(this.forest, true, 0.3);
 
         this.hints.hide();
         this.controlsAnimation.play('ControlsFadeOut');
